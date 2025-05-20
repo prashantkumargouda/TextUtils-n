@@ -1,8 +1,17 @@
 import './App.css';
+import About from './Components/About';
 import Alert from './Components/Alert';
 import Navbar from './Components/Navbar';
-import TextForm from './Components/TextForm';
+// import TextForm from './Components/TextForm';
 import React , {useState} from 'react' ;
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import TextForm from './Components/TextForm';
 
 function App() {
   const [mode , setMode] = useState("light") ;
@@ -30,12 +39,19 @@ function App() {
       showAlert("Light mode has been enabled" , "success") ;
     }
   }
-  
+
   return (
     <>
+      <Router>  
       <Navbar title="TextUtils" aboutText = "About Us" mode = {mode} toggleMode = {toggleMode} /> 
       <Alert alert = {alert} />
-      <TextForm heading="Enter Your Text to Analyze" mode ={mode} />
+
+      
+        <Routes>
+          <Route exact path='/about' element = {<About/>}/>
+          <Route exact path='/' element={<TextForm heading = "Enter Text to Analyze" mode = {mode} showAlert = {showAlert}/>} />
+        </Routes>
+      </Router>
     </>
   );
 }
